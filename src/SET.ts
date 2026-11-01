@@ -815,6 +815,12 @@ class SET {
           reject("Antes debe autenticarse");
         }
 
+        // Capturar la identidad TLS antes de ceder la ejecución al comprimir.
+        const httpsAgent = new https.Agent({
+          cert: Buffer.from(this.cert, "utf8"),
+          key: Buffer.from(this.key, "utf8"),
+        });
+
         const zip = new JSZip();
 
         let rLoteDEXml = `<rLoteDE>\n`;
@@ -834,13 +840,6 @@ class SET {
 
         const zipAsBase64 = await zip.generateAsync({ type: "base64" });
         //fs.writeFileSync(__dirname + '/zipped.zip', zipAsBase64);
-
-        const httpsAgent = new https.Agent({
-          cert: Buffer.from(this.cert, "utf8"),
-          key: Buffer.from(this.key, "utf8"),
-          //rejectUnauthorized: false,
-          //minVersion: "TLSv1",
-        });
 
         //axios.get(`${url}`, { httpsAgent }).then((respuesta: any) => {
         let soapXMLData = `<?xml version="1.0" encoding="UTF-8"?>\n\
