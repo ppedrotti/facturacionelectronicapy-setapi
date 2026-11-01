@@ -1,4 +1,20 @@
 # Facturación Electrónica - Api SET
+
+## Corrección TLS del fork Krae.OS
+
+La rama `corregir-aislamiento-tls-1.0.34` conserva la base 1.0.34 y captura
+el certificado y la clave del lote antes de esperar la compresión ZIP.
+Esto evita que otra comunicación cambie su identidad TLS durante esa espera.
+
+`dist/` se versiona para consumir el archivo de GitHub de un commit exacto
+sin compilar durante la instalación. Antes de confirmar cambios de fuente,
+ejecutar `npm test` y agregar también los archivos compilados resultantes.
+Para preparar este código histórico desde cero, instalar con
+`npm ci --legacy-peer-deps` y ejecutar `npm test` (Node.js 22 o posterior).
+
+El consumidor debe fijar el SHA completo en la URL
+`https://github.com/ppedrotti/facturacionelectronicapy-setapi/archive/<SHA>.tar.gz`.
+No usar una URL de rama para instalaciones de producción.
 API de comunicación con SIFEN - Subsecretaría de estado de Tributación, para envío de los documentos electrónicos y consultas de datos de Facturas electrónicas.
 
 ## Instalación
